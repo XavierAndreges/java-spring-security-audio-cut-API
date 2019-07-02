@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .exceptionHandling()
       .authenticationEntryPoint(new Http403ForbiddenEntryPoint() {
       })
+      .and().headers().frameOptions().disable()
       .and()
       .authenticationProvider(getProvider())
       .formLogin()
@@ -59,8 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests()
       .antMatchers("/login").permitAll()
       .antMatchers("/logout").permitAll()
+      .antMatchers("/console/**").permitAll()
       .antMatchers("/user").authenticated()
-      .anyRequest().permitAll();
+      .anyRequest().permitAll()
+    ;
   }
 
   private class AuthentificationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
